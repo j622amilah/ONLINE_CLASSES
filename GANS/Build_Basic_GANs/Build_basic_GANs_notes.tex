@@ -1,0 +1,2286 @@
+\documentclass[11pt, onecolumn]{article}			
+% \documentclass[font_size, pagestyle, page_column]{type_of_document}
+% (page 17-19)
+% This specifies what type of document you want to make, certain documents allow you to use certain commands and the formatting is different/specific for each type of document.  This document is called an article and it is the most standard type of document.
+
+
+% -----------------------------------------
+% Packages allow you to use extra commands (commands are always followed by a backslash (\). )  You can add as many packages as you like.  However, sometimes the order in which you list the packages can give errors.
+% -----------------------------------------
+\usepackage{graphicx}	% This package allow you to insert PostScript figures
+
+\usepackage{amsmath} 	% This is a typical math package - it allows you to type certain known math symbols, like exp for expoential 
+\usepackage{amssymb} 	% This is a typical math package
+\usepackage{amsthm}		% This is a typical math package
+
+\usepackage{color}		% This package allows you to use command with color, like colored text
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+% -----------------------------------------
+
+
+% -----------------------------------------
+% Can change/adjust the page margins (page 24-26 - has diagram of margins)
+% -----------------------------------------
+\topmargin	=10.mm		% beyond 25.mm
+\oddsidemargin	=0.mm		% beyond 25.mm
+\evensidemargin	=0.mm		% beyond 25.mm
+\headheight	=0.mm
+\headsep	=0.mm
+\textheight	=220.mm
+\textwidth	=165.mm
+\parindent  15.mm			% indent paragraph by this much
+\parskip     2.mm			% space between paragraphs
+
+\alph{footnote}		% make title footnotes alpha-numeric
+
+\setlength{\parindent}{0pt}   % no indentation for the entire document
+% -----------------------------------------
+
+
+
+
+\title{Build Basic Generative Adversarial Networks (GANs)}	% the document title
+
+%\author{Name \\	% author information
+%		Affiliation \\
+%		Affilication \\
+%		Affiliation}
+
+\date{\today}	% You can write any day or you can use \today, which inserts the current date
+
+% --------------------- end of the preamble ---------------------------
+
+
+\bibliographystyle{acm}		% Style of bibliography presentation
+
+% -----------------------------------------
+% This is the start of the body of the document.  The \begin{document} is required for all latex documents.
+% -----------------------------------------
+\begin{document}
+
+\pagenumbering{roman}	% Roman numerals from abstract to text
+
+\maketitle		% This command prints the title page
+
+\thispagestyle{empty}	% no page number on THIS page 
+
+
+% -----------------------------------------
+% Abstract
+% -----------------------------------------
+%\begin{abstract}			% beginning of the abstract
+
+%\end{abstract}				% end of the abstract
+% -----------------------------------------
+
+\newpage				% OPTIONAL: start a new page (it looks nice)
+
+\tableofcontents		% OPTIONAL: creates table of contents automatically
+
+\newpage				% OPTIONAL: start a new page
+
+\pagenumbering{arabic}	% You can specify the page numbers as a specific system/font.  Arabic is the default; can also use roman (lowercase Roman numerals), Roman (uppercase Roman numerals), alph (lowercase English letters), Alph (uppercase English letters)
+
+% -------------------------------------------------
+% WEEK 1
+% -------------------------------------------------
+\section{Week 1: Intro to GANs : Welcome to the Specialization}
+
+Generative Adversarial Networks (GANs), are an emergent class of deep learning algorithms that generate incredibly realistic images
+
+If you do not have enough data, you can use GANs to generate/synthesize data for your supervised learning algorithms
+
+"Art forger and art inspector analogy", The art forger is trying to mimic the "real art" and there is an inspector trying to determine if it is real or false art.  So GANs is the art forger, trying to generate something, and the art inspector gives feedback to the forger such that it can create better art.
+
+
+\section{Week 1: Intro to GANs : Welcome to Week 1}
+
+GANs is an unsupervised technique, GANs consists of a generator and discriminator models.  
+
+They work together to generate realistic images
+
+
+\section{Week 1: Intro to GANs : Syllabus}
+
+Welcome to Course 1 of Generative Adversarial Networks (GANs): Build Basic GANs! We hope you are excited to get started.
+
+To make sure you are best equipped to learn, here is a note on the prerequisites for this specialization: 
+
+We include a review of convolutional neural networks, deep learning, and the PyTorch framework which we hope you will find valuable, especially if you’re coming from a TensorFlow or Keras background. This specialization is designed for someone without familiarity with GANs to come in, learn the basics in Course 1, and still succeed with learning the advanced topics presented in Course 2 and 3. The first of the 3 Courses (Course 1) is designed to explain the basic concept and foundation of GANs. If you are familiar with GANs or consider yourself an advanced learner, you may find it most enriching to start with Course 2 and supplement your learning with the optional notebooks. For anyone curious about a concept covered, you can also take a look at the optional readings for that week!
+
+Ready? Let's get started!
+
+Here's a peek at what you will be doing in Course 1: In Week 1, you will learn the fundamental components of GANs and build a basic GAN using PyTorch (your first GAN, perhaps!). By the end of Week 2, you will have used convolutional layers to build an advanced DCGAN that processes images. In Week 3, you will learn about mode collapse and apply W-Loss and gradient penalties to remedy it. Finally, you will learn how to effectively control your GANs and build conditional GANs in Week 4.
+
+    Week 1: Intro to GANs
+    Week 2: Deep Convolutional GANs
+    Week 3: Wasserstein GANs with Gradient Penalty
+    Week 4: Conditional GAN \& Controllable Generation
+
+Let's get learning!
+
+
+\section{Week 1: Intro to GANs : Connect with your mentors and fellow learners on Slack!}
+
+Hi! We've created a Slack workspace that we'd like you to join!
+
+In Slack,
+
+    You can ask questions and interact with mentors and other learners. Mentors will primarily be answering questions in Slack!
+    Attend live, virtual events where you can hear from practitioners in the field.
+    Find out about opportunities to work more directly with deeplearning.ai as mentors.
+
+Please join the Slack workspace by going to the following link DeepLearningAI-GANs.slack.com (\url{https://deeplearningaigans.slack.com/join/shared_invite/zt-pz6wb42b-88Z19Icl9G0MOkB31LbiIw#/shared-invite/email})
+
+This link to join slack was last updated on October 1 , 09:00PM PST.  If the link has expired, please reply to this discussion forum (\url{https://www.coursera.org/learn/build-basic-generative-adversarial-networks-gans/discussions/weeks/1/threads/3cpM4P_ZEeqxrQ5g281r2Q}) post and we will update the invitation link.
+
+Note that the mentors will be answering questions in the Slack workspace and not necessarily the discussion forums on Coursera (so that all questions and answers are in the same place), so you are encouraged to ask questions within Slack.
+
+This Slack workspace includes all courses of this specialization.
+
+\section{Week 1: Intro to GANs : Generative Models}
+
+A discrimative model distinguishes between two or more classes, using a set of features X in order to determine a category/class Y; they model the probability of class Y given a set of features X.
+
+A generative model try to learn how to make a realistic representation of some class.  They use noise/random numbers and a set of features X, and output an example Y (which represents a class) 
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/1_generative_models1.png}
+\end{center}
+\caption{Outline}
+\label{1_generative_models1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/1_generative_models2.png}
+\end{center}
+\caption{Generative Models vs. Discriminative Models}
+\label{1_generative_models2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/1_generative_models3.png}
+\end{center}
+\caption{Generative Models vs. Discriminative Models}
+\label{1_generative_models3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/1_generative_models4.png}
+\end{center}
+\caption{Generative Models}
+\label{1_generative_models4}
+\end{figure}
+% --------------------
+
+There are two types of generative models: 1) variational autoencoders (VAEs), 2) Generative Autoencoders (GANs).
+
+VAEs consist of an encoder and a decoder, the features X (ie: a vector constructed from an image) are given to the encoder such that the feature vectors are represented as points in latent space.  The decoder takes the points or neighboring points and reconstructs the vectors thus the image.  The decoder needs to be trained first, in order to reconstruct images from latent space points.  
+
+It is called "variational" because noise is added to the encoder during training.  The encoder encodes the image onto a whole distribution and then samples a point on that distribution to feed into the decoder to then produce a realistic image. (NOT encoding the image into a single point in latent space)
+
+This adds a little bit of noise since different points can be sampled on this distribution.
+
+A good distribution over the latent space is important for VAEs.
+
+GANs is composed of two models, a generator and a discriminator, the generator is a decoder that takes in random noise w/a class feature and generates images.  The discriminator is a discrimative model trying to determine if the generated image below to the class or not.
+
+The two models in a GAN compete with each other and reach a point where realistic examples are produced by the generator.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/1_generative_models5.png}
+\end{center}
+\caption{Summary}
+\label{1_generative_models5}
+\end{figure}
+% --------------------
+
+\clearpage
+\section{Week 1: Intro to GANs : Real Life GANs}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs1.png}
+\end{center}
+\caption{GANs Over Time}
+\label{2_real_life_GANs1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs2.png}
+\end{center}
+\caption{GANs Over Time}
+\label{2_real_life_GANs2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs3.png}
+\end{center}
+\caption{GANs Over Time}
+\label{2_real_life_GANs3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs4.png}
+\end{center}
+\caption{GANs Over Time}
+\label{2_real_life_GANs4}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs5.png}
+\end{center}
+\caption{GANs for Image Translation}
+\label{2_real_life_GANs5}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs6.png}
+\end{center}
+\caption{GANs for Image Translation : a person can make rough sketches and GANs creates a photo finished image}
+\label{2_real_life_GANs6}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs7.png}
+\end{center}
+\caption{GANs are Magic! - Animation of realistic faces}
+\label{2_real_life_GANs7}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs8.png}
+\end{center}
+\caption{GANs for 3D Objects}
+\label{2_real_life_GANs8}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/2_real_life_GANs9.png}
+\end{center}
+\caption{Companies Using GANs}
+\label{2_real_life_GANs9}
+\end{figure}
+% --------------------
+
+\clearpage
+\section{Week 1: Intro to GANs : Pre-trained Model Exploration}
+
+Explore some cool GANs in an interactive way here—over the GANs specialization, you'll learn how these work and how you might apply them!
+
+\url{https://colab.research.google.com/github/https-deeplearning-ai/GANs-Public/blob/master/C1W1_(Colab)_Pre_trained_model_exploration.ipynb}
+
+
+\section{Week 1: Intro to GANs : Intuition Behind GANs}
+
+Situation : What is the relationship between the generator and the discriminator?  What are their goals??
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/3_intuition_behind_GANs1.png}
+\end{center}
+\caption{Generative Adversarial Network}
+\label{3_intuition_behind_GANs1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/3_intuition_behind_GANs2.png}
+\end{center}
+\caption{Generative Adversarial Network}
+\label{3_intuition_behind_GANs2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/3_intuition_behind_GANs3.png}
+\end{center}
+\caption{Generative Adversarial Network}
+\label{3_intuition_behind_GANs3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/3_intuition_behind_GANs4.png}
+\end{center}
+\caption{The Game Is On!}
+\label{3_intuition_behind_GANs4}
+\end{figure}
+% --------------------
+
+
+\section{Week 1: Intro to GANs : Discriminator}
+
+The discriminator is a classifier that takes in features and determines if it belongs to the real or fake class.  The following slides reviews what a classifier is.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/4_discriminator1.png}
+\end{center}
+\caption{Classifiers (training)}
+\label{4_discriminator1}
+\end{figure}
+% --------------------
+
+Probability of the output class Y given the features X; the conditional probability P( Y=cat | X=feature ).  Where the cost function minimizes the error between the Y prediction and the Y actual.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/4_discriminator2.png}
+\end{center}
+\caption{Classifiers}
+\label{4_discriminator2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/4_discriminator3.png}
+\end{center}
+\caption{Discriminator}
+\label{4_discriminator3}
+\end{figure}
+% --------------------
+
+
+\clearpage
+\section{Week 1: Intro to GANs : Generator}
+
+The generator will output different images at every run, because you put a noise vector (sometimes with the class Y) as the input
+
+The generator is trying to model the features X given the class Y, denoted as P(X|Y).  Since the generator is always modeling the same class, you only write P(X).
+
+If you are creating a generator for multiple classes, you keep the original notation P(X|Y)
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/5_generator1.png}
+\end{center}
+\caption{Neural Networks}
+\label{5_generator1}
+\end{figure}
+% --------------------
+
+Theta are NN parameters (once a generator is sufficiently accurate you save the parameters to theta); theta describes the NN generator model
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/5_generator2.png}
+\end{center}
+\caption{Generator : Learning}
+\label{5_generator2}
+\end{figure}
+% --------------------
+
+The most common types of features (like, tails, ears, etc) will be "sampled"/used the most from all the possible features of cats.  This means that typical cat images will be generated MORE, in comparison to rare cat breed images; the model generates "a gaussian/average" representation of a cat.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/5_generator3.png}
+\end{center}
+\caption{Generator}
+\label{5_generator3}
+\end{figure}
+% --------------------
+
+However, you can control the sampling process to obtain a different distribution of cats 
+
+\section{Week 1: Intro to GANs : BCE Cost Function}
+
+The Binary Cross Entropy (BCE) cost function is used for training GANs
+
+m = the number of examples
+h = the model prediction output
+y = the actual output
+x = input features
+theta = parameters of the discriminator
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/6_BCEcost1.png}
+\end{center}
+\caption{BCE Cost Function}
+\label{6_BCEcost1}
+\end{figure}
+% --------------------
+
+
+\clearpage
+\section{Week 1: Intro to GANs : Putting It All Together}
+
+The generator takes in system backpropagated parameters (theta$\_$g : it is "$\_$g" because the generator is being updated) and noise (epsilon), and outputs something that looks real (X$\_$hat)
+
+The generator learns over time with the system backpropagated parameters (theta$\_$g), from the cost function that compares Y to Y$\_$hat (she says "from the discriminator")
+
+The discriminator learn over time with the system backpropagated parameters (theta$\_$d : it is "$\_$d" because the discriminator is being updated), from the cost function that compares Y to Y$\_$hat
+
+theta$\_$d hold information about correct classification or not
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/7_putting_it_all_together1.png}
+\end{center}
+\caption{Training GANs : Generator}
+\label{7_putting_it_all_together1}
+\end{figure}
+% --------------------
+
+Over many iterations, the fake images get more realistic and harder to discern, but at the same time the discriminator gets better at discerning real images
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/7_putting_it_all_together2.png}
+\end{center}
+\caption{Training GANs}
+\label{7_putting_it_all_together2}
+\end{figure}
+% --------------------
+
+Both model should be at similar skill levels from the beginning of and DURING training, because results would be classified as either 100% real (superior generator) OR 100\% fake (superior discriminator)
+
+A 100% real or fake score does not help the discriminator or generator to improve because the feedback is not useful (but why not?? any feedback should be useful...no?  A: the feedback changes are too drastic.)
+
+
+\clearpage
+\section{Week 1: Intro to GANs : (Optional)Intro to PyTorch}
+
+PyTorch is a deep learning framework developed by Facebook.
+"in" defines the number of inputs
+define the architecture of the model as an attribute within the constructor init
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/8_intro_to_pytorch1.png}
+\end{center}
+\caption{PyTorch vs TensorFlow}
+\label{8_intro_to_pytorch1}
+\end{figure}
+% --------------------
+
+One output for the "in" inputs 
+nn.Sigmoid() means forward pass 
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/8_intro_to_pytorch2.png}
+\end{center}
+\caption{Defining Models in PyTorch}
+\label{8_intro_to_pytorch2}
+\end{figure}
+% --------------------
+
+Given the inputs x, you put the inputs through the Sequential model
+
+model = LogisticRegression(16) has 16 inputs
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/8_intro_to_pytorch3.png}
+\end{center}
+\caption{Training Models in PyTorch}
+\label{8_intro_to_pytorch3}
+\end{figure}
+% --------------------
+
+
+\clearpage
+\section{Week 1: Intro to GANs : Lab (Optional) - Intro to PyTorch}
+
+PyTorch is a tape-based autograd system, meaning that it uses reverse-mode automatic differentiation (or autodiff). This means that the derivatives are computed using "operator overloading", or are imperative or they pass values to a variable that can be modified (ie: C++).  Difficult to optimize the computation rate.
+
+TensorFlow's symbolic structure is called source code transformation - you define the structure of how to solve derivatives and then you examine the structure (plug values into the structure) to solve the values.  Positive is that it is very computationally efficient.
+
+
+\section{Week 1: Intro to GANs : Inputs to a Pre-trained GAN}
+
+Learn about what the inputs to a GAN mean and how they affect its output!
+
+\url{https://colab.research.google.com/github/https-deeplearning-ai/GANs-Public/blob/master/C1W1_(Colab)_Inputs_to_a_pre_trained_GAN.ipynb}
+
+
+\section{Week 1: Intro to GANs : Your First GAN}
+
+
+
+\section{Week 1: Intro to GANs : Works Cited}
+
+These Cats Do Not Exist (Glover and Mott, 2019): \url{http://thesecatsdonotexist.com/}
+
+PyTorch Documentation: \url{https://pytorch.org/docs/stable/index.html#pytorch-documentation}
+
+MNIST Database: \url{http://yann.lecun.com/exdb/mnist/}
+
+
+\section{Week 1: Intro to GANs : How to Refresh your Workspace}
+
+There may come a time when you want to refresh your workspace to get the most updated version of the starter code.  This may be the case if you wish to start over, or if the DeepLearning.AI team has provided an update with bug fixes or enhancements.  To refresh your workspace, please follow these steps:
+
+In any Jupyter notebook, first save your work by going clicking File -> Download as -> Notebook (.ipynb
+Next, click File -> Open. This opens up the file directory.
+Select the notebook you wish to refresh from the list by clicking the check box next the the filename
+Click the trashcan icon at the top to delete the notebook
+Copy this text: ?forceRefresh=true and paste it onto the end of the URL in your browser bar then hit <Enter>.
+You will see your workspace refresh with the updated copy of the notebook
+
+
+% -------------------------------------------------
+% WEEK 2
+% -------------------------------------------------
+\clearpage
+\section{Week 2: Activations (Basic Properties)}
+
+Activations are functions that take any real number as input, and outputs a number in a certain range using a non-linear differentiable function
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/9_activations1.png}
+\end{center}
+\caption{Activations}
+\label{9_activations1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/9_activations2.png}
+\end{center}
+\caption{Activations}
+\label{9_activations2}
+\end{figure}
+% --------------------
+
+\section{Week 2: Deep Convolutional GANs : Common Activation Functions}
+
+The derivative at zero is set to zero for RELU
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/10_common_activation_functions1.png}
+\end{center}
+\caption{Activations: ReLU}
+\label{10_common_activation_functions1}
+\end{figure}
+% --------------------
+
+Dying Relu problem : When z <= 0,  the derivative equals zero, causing some neurons to get stuck and stop learning
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/10_common_activation_functions2.png}
+\end{center}
+\caption{Activations: Leaky ReLU}
+\label{10_common_activation_functions2}
+\end{figure}
+% --------------------
+
+Sigmoid outputs values between 0 and 1, often used in binary classification problems
+
+Not used for hidden layers, because the tails are constant and this prevents the activation function to change - called vanishing gradient problem
+
+Tanh is between -1 and 1, it has the same problem as the sigmoid function with vanishing gradients
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/10_common_activation_functions3.png}
+\end{center}
+\caption{Activations: Sigmoid}
+\label{10_common_activation_functions3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/10_common_activation_functions4.png}
+\end{center}
+\caption{Activations: Tanh}
+\label{10_common_activation_functions4}
+\end{figure}
+% --------------------
+
+
+\clearpage
+\section{Week 2: Deep Convolutional GANs : Batch Normalization (Explained)}
+
+GANs can be fragile because the progress of the generator and discriminator are dependent on each other for 'improving' with respect to each other, speeding up the process helps to make both models better (predictive, etc)
+
+Batch normalization is a way to speed up performance
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/11_batch_normalization_explained1.png}
+\end{center}
+\caption{Covariate Shift}
+\label{11_batch_normalization_explained1}
+\end{figure}
+% --------------------
+x1 = size, x2 = fur color
+
+Distribution of the inputs influence how your network learns (ie : the shape of the cost function due to the weights)
+
+Covariate shift - the fact that the distribution of inputs cause different prediction of weights (z), and thus a different cost function gradient shape.  In other words, not all the inputs have the same distribution.  
+
+Their definition : Covariate shift = the distributions of some variables are dependent on another.
+
+
+An input with a skewed distribution, and an input with a parametric distribution will result in an oval shaped gradient.  Whereas parametric inputs will give a circular shaped gradient.
+ 
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/11_batch_normalization_explained2.png}
+\end{center}
+\caption{Covariate Shift}
+\label{11_batch_normalization_explained2}
+\end{figure}
+% --------------------
+
+Normalization of the inputs to have a mean=0 and std=1 results in a circular shaped gradient; normalization is recommended to avoid covariate shift
+
+You can also avoid covariate shift if you ensure that all the inputs have the same type of distribution (ie : all left skewed, all parametric)
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/11_batch_normalization_explained3.png}
+\end{center}
+\caption{Normalization and its Effects}
+\label{11_batch_normalization_explained3}
+\end{figure}
+% --------------------
+
+Internal Covariate shift - the activation distribution of the internal nodes cause different prediction weights (z)
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/11_batch_normalization_explained4.png}
+\end{center}
+\caption{Batch Normalization}
+\label{11_batch_normalization_explained4}
+\end{figure}
+% --------------------
+
+
+\clearpage
+\section{Week 2: Deep Convolutional GANs : Batch Normalization (Procedure)}
+
+In TensorFlow and Pytorch :
+1) Batchnorm does batch normalization automatically
+2) Test mode (test-time inference time, evaluation or eval mode) : running statistics are saved for you
+
+
+Batch normalization differs from standard normalization because during training, you use this statistics from each batch, not the whole data set, and this reduces computation time and makes training faster with our waiting for the whole data set to be gone through before you can use batch normalization.  
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/12_batch_normalization_procedure1.png}
+\end{center}
+\caption{Batch Normalimation : Training}
+\label{12_batch_normalization_procedure1}
+\end{figure}
+% --------------------
+
+The goal is to have z (the output) have a mean = 0 and std = 1, subtract by the mean and divide by the variance + epilon (to prevent denominator from going to zero)
+
+After normalization, you rescale z to your learned parameters (gamma and beta)
+
+Gamma and beta are learned during training to ensure the distributions of z are optimal (for the task, maybe this means for gradient descent)
+
+So during training, you are not forcing z to have mean=0 and std=1, but you are making z have similar distributions regardless of the input distributions
+
+y is what goes into the activation, for back propagation.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/12_batch_normalization_procedure2.png}
+\end{center}
+\caption{Batch Normalimation : Training}
+\label{12_batch_normalization_procedure2}
+\end{figure}
+% --------------------
+
+Testing : 
+
+During training, each of the batches have a slightly different mean and std due to the inputs/data.
+
+Q: what mean and std should you make your test data have such that it corresponds to the distribution of the batched training data?
+
+A: Take the mean and std over the entire training set - this is called the running mean and std OR $\bf{E}(z_i)$
+
+If you do not use the running mean and use one of the batch means, your data may or may not always correspond with weights from the model and your predictions won't be reliable 
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/12_batch_normalization_procedure3.png}
+\end{center}
+\caption{Batch Normalimation : Test}
+\label{12_batch_normalization_procedure3}
+\end{figure}
+% --------------------
+
+Summary : 
+The batch mean and standard deviation are used for training while the running average statistics from all batches are used for testing. 
+
+
+\section{Week 2: Deep Convolutional GANs : Review of Convolutions}
+
+Convolution allows you to detect key features in different areas of an image.   Filters scan across
+the image, to find various features.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/13_review_of_convolutions1.png}
+\end{center}
+\caption{For example, an eye filter will tell you which parts of the image contains eyes, a nose filter will tell you which parts contain noses, and an ear filter will tell you which parts contain ears.}
+\label{13_review_of_convolutions1}
+\end{figure}
+% --------------------
+
+Filters are real-valued matricies, the values are learned during training. 
+
+Take a look at this five-by-five grayscale image where each square is a pixel with a value between zero and 255.
+
+A value of zero represents black pixels and 255 represents white pixels, gray values are values between 0 and 255.
+
+ie :
+A learned three-by-three filter : one's in the first column, zero's in the second column, and negative one in the last third column.
+
+Convolving (* means the convolution operation) this filter with a grayscale image means : slide the filter across the image and perform multiplication at each slide to get a modified/filtered grayscale image
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/13_review_of_convolutions2.png}
+\end{center}
+\caption{slide 0 : start the filter at the top left corner and multiply all the elements from the filter with the matching pixels of the grayscale image.  Multiply 50 with a one, 50 with the zero, 50 with a negative one and so on.  Then take the sum of all the products and put them into a new resulting matrix.}
+\label{13_review_of_convolutions2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/13_review_of_convolutions3.png}
+\end{center}
+\caption{slide 1 :  move your filter one position to the right to get the element-wise product, sum the results again, and store that value in your matrix and so on and so forth.}
+\label{13_review_of_convolutions3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/13_review_of_convolutions4.png}
+\end{center}
+\caption{The filter example is a vertical line detector, where there are large values in the convolved result are where there are vertical line in the grayscale image.}
+\label{13_review_of_convolutions4}
+\end{figure}
+% --------------------
+
+Parameter sharing
+
+
+Sparse
+
+Summary :
+\begin{itemize}
+\item Convolutions are really important operations used for image processing
+\item Convolutions recognize patterns by scanning each section of your image and detecting features (parameter sharing)
+\item A convolution is a series of sums of element-wise products across your entire image.
+\item Convolutions reduce the size of an image while preserving key features and patterns. (sparse connections)
+\item Convolutions allow you to detect key features in different areas of an image using filters that are learnable during training. (translational invariance)
+\end{itemize}
+
+
+\section{Week 2: Deep Convolutional GANs : Padding and Stride}
+
+Convolutions are simple operations used to detect features in different areas of an image.
+
+A stride = the number of pixels the filter is moved
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/14_padding_and_stride1.png}
+\end{center}
+\caption{In the example, the stride is 1.  A 3 x 3 convolutional filter is applied; compute the element-wise product of the filter with the first 3 x 3 section of the image. Move the filter from the top left to the top right, sliding the filter by one pixel at a time. Move the filter down and repeat.}
+\label{14_padding_and_stride1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/14_padding_and_stride2.png}
+\end{center}
+\caption{Finish stride 1 example}
+\label{14_padding_and_stride2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/14_padding_and_stride2.png}
+\end{center}
+\caption{Finish stride 2 example}
+\label{14_padding_and_stride2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/14_padding_and_stride3.png}
+\end{center}
+\caption{Stride 2 example}
+\label{14_padding_and_stride3}
+\end{figure}
+% --------------------
+
+You can use a different stride for moving down than for moving right (ie:  two to the right and four down)
+
+The larger your strides are, you filter the image less but the computation will be faster; the stride determines how many sections the image your filter will visit.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/14_padding_and_stride4.png}
+\end{center}
+\caption{If you use a stride of 1, you slide the filter over certain parts of your image more and less than others (4 times in the center, 2 times for the center horizontal and vertical, 1 time on the corners). The information in the center of the image is deformed more by the filter, than the corners of the image.}
+\label{14_padding_and_stride4}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/14_padding_and_stride5.png}
+\end{center}
+\caption{Only filtering some parts of the image less than others is not effective; the goal is to filter the entire image equally. To fix uneven filtering, extra pixels are added around the image called padding.  The padding size can vary depending on the size of your filter and the size of the image, such that the image gets filtered evenly.}
+\label{14_padding_and_stride5}
+\end{figure}
+% --------------------
+
+Summary
+1) the stride tells the filter how to scan the image and influences
+2) the size of the output and how often pixels are visited.
+3) Padding is a frame put around images, in order to give the same importance to the pixels at the edges of the images, as the ones in the center. 
+
+
+\section{Week 2: Deep Convolutional GANs : Pooling and Upsampling}
+
+
+Overview:
+\begin{itemize}
+\item Pooling and up-sampling are common layers in convolutional neural networks.
+\item Pooling is used to reduce the size of the input while up-sampling is used to increase the size of that input.
+\end{itemize}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling1.png}
+\end{center}
+\caption{Pooling is when you slide a filter across the image with a certain stride, at each filter slide you either take the mean OR the max value of the pixels in the filter area.  Pooling makes the image size smaller ("have a lower image dimension") and makes the image look blurry ("have a lower resolution"). A benefit of pooling is that it is computationally less expensive to do a calculation on a smaller image.}
+\label{15_pooling_and_upsampling1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling2.png}
+\end{center}
+\caption{Max Pooling: we reduce this four-by-four grayscale image to a two-by-two image using Max pooling.  Not overlapping any pixels slide the filter from left to right and top to bottom, taking the max value in each filter window.}
+\label{15_pooling_and_upsampling2}
+\end{figure}
+% --------------------
+
+\begin{itemize}
+\item Max pooling extracts the most salient information from the image, which are the LIGHT image values!
+\item Average pooling is another method where you just take the average instead of the max; it extracts the GRAY image values!
+\item Min pooling is where you take the minimum value in the filter window, it extracts the DARK image values!
+\end{itemize}
+
+- Training tip: if you images have a DARK, LIGHT background choose the appropriate pooling.  At the base/input use min or max pooling with respect to the appearance of your image, and at the head/output use average pooling to normalize the pixel values
+
+- Training tip: if you are using a pretrainned base/input, do average pooling to normalize the pixel values
+
+Sometimes this is not an image and this is just an intermediate layer so this is really just extracting the weights with the highest values on this intermediate section.
+
+Pooling does not have any learnable parameters; meaning that after you perform pooling you do not re-estimate the W and b parameters to get a new a or z
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling3.png}
+\end{center}
+\caption{Max Pooling}
+\label{15_pooling_and_upsampling3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling4.png}
+\end{center}
+\caption{Upsampling: To enlarge the size of your image or layer use Upsampling; the image remains blurry but it technically has a higher resolution because it has more image detail. In upsampling we estimate values for the additional pixels OR "empty pixel" value}
+\label{15_pooling_and_upsampling4}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling5.png}
+\end{center}
+\caption{Upsampling: Nearest Neighbors}
+\label{15_pooling_and_upsampling5}
+\end{figure}
+% --------------------
+
+There are 3 methods for upsampling: 
+
+1) Nearest neighbors up-sampling : copy the value of a pixel and put the same value below, to the right, and diagonal bottom right of the copied pixel.  Repeat this copying and padding for all pixels in the image.
+
+2) Linear interpolation up-sampling: 1) you take each pixel and put "empty pixels" below, to the right, and diagonal bottom right of each pixel, 2) like a "coloring-book fill game" estimate the color value of the "empty pixels" using the neighboring corner values of each "empty pixels", 3) you estimate the color value at 1 edge of the empty pixel and use that to fill the "empty pixel" value (see the red box)
+
+3) Bi-linear interpolation up-sampling: 1) you take each pixel and put "empty pixels" below, to the right, and diagonal bottom right of each pixel, 2) like a "coloring-book fill game" estimate the color value of the "empty pixels" using the neighboring corner values of each "empty pixels", 3) you estimate the color value at 2 edges of the empty pixel and use the 2 edge values to estimate the "empty pixel" value (see the blue box)
+
+Bi-linear interpolation was invented because nearest neighbors up-sampling and linear interpolation cause
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling6.png}
+\end{center}
+\caption{Upsampling: Nearest Neighbors}
+\label{15_pooling_and_upsampling6}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/15_pooling_and_upsampling7.png}
+\end{center}
+\caption{Upsampling: Linear and Bi-linear interpolation}
+\label{15_pooling_and_upsampling7}
+\end{figure}
+% --------------------
+
+In summary, 
+\begin{itemize}
+\item pooling reduces the size of the image OR layer (decreases resolution)
+\item up-sampling increases the size of the image OR layer (increases resolution)
+\item after you perform convolution you re-estimate the W and b parameters to get a new a or z (learnable parameters)
+\item after you perform pooling or up-sampling you DO NOT re-estimate the W and b parameters to get a new a or z
+
+\section{Week 2: Deep Convolutional GANs : Transposed Convolutions}
+
+
+Transposed Convolutions is applying a filter and upsample an image/layer at the same time!  Remember that convolution filters and downsamples an image/layer at the same time, so transposed convolution does the inverse (it is known as Deconvolution, upsampled convolution, fractionally strided convolution).  You do not want to undo what the convolutional steps did, you ONLY want to make the small image/layer bigger and sharper.
+
+It is also referred to as fractionally strided convolution due since stride over the output is equivalent to fractional stride over the input. For instance, a stride of 2 over the output is 1/2 stride over the input.
+
+It is also referred to as Backward strided convolution because forward pass in a Transposed Convolution is equivalent to backward pass of a normal convolution.
+
+Transposed Convolutions are used in Encoder-Decoder networks where the network is divided into two parts, a downsampling network and an upsampling network. 
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/16_transposed_convolutions1.png}
+\end{center}
+\caption{In the downsampling network you use convolution to condense image patterns ("obtain abstract representations of the input image"); you make the image size small and decrease the resolution.  In the upsampling network you use upsampling to make the image size the same as the input image.}
+\label{16_transposed_convolutions1}
+\end{figure}
+% --------------------
+
+Most popular Upsampling techniques are:
+1) Nearest Neighbors
+2) Bi-linear Interpolation
+3) Bed of nails
+4) Max Unpooling
+5) Transposed Convolution
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/16_transposed_convolutions2.png}
+\end{center}
+\caption{Bed of nails}
+\label{16_transposed_convolutions2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/16_transposed_convolutions3.png}
+\end{center}
+\caption{Max Unpooling}
+\label{16_transposed_convolutions3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/16_transposed_convolutions4.png}
+\end{center}
+\caption{Transposed Convolution Example: you want to upsample your two-by-two input to a three-by-three output while having an upsampling effect. Use the transposed convolution method using a two-by-two learned filter with stride equal to one. You start by taking the top-left value from your input and getting its product with every value in the two-by-two filter. Then you save this value in the top two-by-two left corner of your output. Shift the filter one stride to the right and repeat, then shift the filter down left and repeat, etc.  Then re-estimate the W and b parameters to get a new a or z (learnable parameters)}
+\label{16_transposed_convolutions4}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/16_transposed_convolutions5.png}
+\end{center}
+\caption{The Problem with Transposed Convolution. The output center values and "cross values" are influenced more by the values from the input, than the corner values like with convolution without padding.  Because some parts of the output image are unevenly filtered, you see distortions in the image like a checkerboard pattern or even holes.}
+\label{16_transposed_convolutions5}
+\end{figure}
+% --------------------
+
+This can be fixed or reduced by using kernel-size divisible by the stride, for e.g taking a kernel size of 2x2 or 4x4 when having a stride of 2.
+
+Applications of Transposed Convolution:
+1. Super- Resolution
+2. Semantic Segmentation
+
+
+\section{Week 2: Deep Convolutional GANs : (Optional) A Closer Look at Transposed Convolutions}
+Now that you have an idea of what transposed convolutions are (also commonly referred to as "deconvolutions") and the checkerboard pattern problem that comes with using them, let's take a closer look! This interactive paper demonstrates the checkerboard pattern problem and how they are not exclusive to GANs, but any neural network that employs them.
+
+Odena, et al., "Deconvolution and Checkerboard Artifacts", Distill, 2016. http://doi.org/10.23915/distill.00003
+
+\section{Week 2: Deep Convolutional GANs : Deep Convolutional GAN (DCGAN) - Programming Assignment}
+
+
+\section{Week 2: Deep Convolutional GANs : Deep Convolutional GAN (DCGAN) - Programming Assignment}
+
+
+\section{Week 2: Deep Convolutional GANs : (Optional) The DCGAN Paper}
+Curious about the paper behind the deep convolutional GAN (DCGAN) you just implemented? Check out the paper!
+
+Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (Radford, Metz, and Chintala, 2016): https://arxiv.org/abs/1511.06434
+
+\section{Week 2: Deep Convolutional GANs : (Optional Notebook) GANs for Video}
+Please note that this is an optional notebook that is meant to introduce more advanced concepts, if you're up for a challenge. So, don't worry if you don't completely follow every step! We provide external resources for extra base knowledge required to grasp some components of the advanced material.
+
+In this notebook, you're going to learn about TGAN, from the paper Temporal Generative Adversarial Nets with Singular Value Clipping (Saito, Matsumoto, & Saito, 2017), and its origins in image generation. 
+
+Notebook link: https://colab.research.google.com/github/https-deeplearning-ai/GANs-Public/blob/master/C1W2_Video_Generation_(Optional).ipynb
+
+
+\section{Week 2: Deep Convolutional GANs : Works Cited}
+
+All of the resources cited in Course 1 Week 2, in one place. You are encouraged to explore these papers/sites if they interest you—for this week, both papers have been included as optional readings! They are listed in the order they appear in the lessons.
+
+From the videos: 
+\begin{itemize}
+\item Deconvolution and Checkerboard Artifacts (Odena et al., 2016): http://doi.org/10.23915/distill.00003
+\end{itemize}
+
+From the notebook:
+\begin{itemize}
+\item Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (Radford, Metz, and Chintala, 2016): https://arxiv.org/abs/1511.06434
+\item MNIST Database: http://yann.lecun.com/exdb/mnist/
+\end{itemize}
+
+% -------------------------------------------------
+% WEEK 3
+% -------------------------------------------------
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Mode Collapse}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/17_mode_collapse1.png}
+\end{center}
+\caption{A mode occurs in a data distribution at: 1) the largest distribution area (OR at the highest concentration of observations) at the binned variable or variable value.  A distribution can have one or more modes.  To find the mode location/s: 1) Single mode : take the mean value of the distribution (normal distribution), 2) Bimodal OR multi-modal: find the peaks on the probability density distribution.}
+\label{17_mode_collapse1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/17_mode_collapse2.png}
+\end{center}
+\caption{Imagine if you took each of the "8 number images" for the number 0 to 9, and reshaped each image to be a vector.  You would get an X feature matrix with 10 columns, each column corresponding to a number from 0 to 9.  Then plot each of columns with respect to each other (maybe itself only?) on the same 2D feature space. You should get a plot like the plot on the left.  Where each circle corresponds to a specific number column.}
+\label{17_mode_collapse2}
+\end{figure}
+% --------------------
+
+The handwritten digits are represented by features x_1 and x_2 (x_1 and x_2 are dimensions).  The probability density distribution is multi-modal with 10 different modes.
+
+Imagine the distribution as a surface with many peaks corresponding to each digit.  imagine each of these peaks coming out at you in a 3D representation where the darker circle represents higher altitudes.
+
+The 10 modes:
+Different observations of the number 7 will be represented by similar x_1 and x_2 pairs.  The sevens are located in the marked black distribution circle, marked by red, and the mean is the center of the circle.
+
+Values in-between the 10 modes: 
+Different pairs of x_1 and x_2 features would create these handwritten fives here and a value in between the seven and five, where it's very low density, so very low probability of generating something that is an intermediate between seven and five in the real dataset, it would be probably a mixture of seven and five.
+
+But there's a very low probability that you would see that x_1, x_2 pair in this in-between space, that would produce an intermediate five seven looking number.
+
+Different observations of the same digit will be grouped together in this feature space with high concentration in the area with the most common way to write that digit or where that average seven is there and, of course, an average five is in the center of the five mode peak.
+
+This probability density distribution over these features, x_1 and x_2, will have 10 modes, one for each of these digits.
+
+What is mode collapse?
+Probability density distribution modes merge together, meaning that some features are confused/mixed with other features and classifying information with respect to these features will be poor
+
+What is mode collapse for GANS?
+Take a discriminator that has learned to be good at identifying which handwritten digits are fakes, except for cases where the generated images look like ones and sevens.
+
+This could mean the discriminator is at of local minima of its cost function.
+
+The discriminator classifies most of the digits correctly, except for the ones that resembled those ones and sevens, then this information is passed on to the generator.
+
+The generator sees this and looks at the feedback from the discriminator and gets a good idea of how to fool the discriminator in the next round.
+
+It sees that all the images were misclassified by the discriminator, resemble either a one or a seven, so it generates a lot of pictures that resemble either of those numbers.
+
+Then these generated images are then passed on to the discriminator in the next round who then misclassifies every picture except for maybe the one felt looks more like a seven.
+
+Generator gets that feedback and sees that the discriminator's weakness is with the pictures that resembled a handwritten one, so this time all the pictures it produces resembled that digit, collapsing to a single mode or the whole distribution of possible handwritten digits.
+
+Eventually the discriminator will probably catch on and learn to catch the generator's fake handwritten number ones by getting out of that local minima.
+
+But the generator could also migrate to another mode of the distribution and again would collapse again to a different mode.
+Or the generator would not be able to figure out where else to diversify.
+
+Summary:
+1) Modes are peaks and the probability distribution of our features.
+2) Real-world datasets have many modes related to each possible class within them, like the digits in this dataset of handwritten digits.
+3) Mode collapse happens when the generator learns to fool the discriminator by producing examples from a single class from
+the whole training dataset like handwritten number ones. You do not want Mode collapse to happen because you do not want the discriminator misclassifying content from the generator.
+
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Problem with BCE Loss}
+
+The Binary Cross-Entropy (BCE) loss function is traditionally used for training GANs (it is not the best way to train GANs)
+
+The BCE loss function causes mode collapse and vanishing gradient problems to occur
+
+Review of the BCE loss function wrt the generator and discriminator:
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/18_problem_with_BCE_loss1.png}
+\end{center}
+\caption{BCE loss function, is an average of the cost for the discriminator for misclassifying real and fake observations. The first term is for reals and the second term is for the fakes.}
+\label{18_problem_with_BCE_loss1}
+\end{figure}
+% --------------------
+
+The higher the cost value, the worse the discriminator is doing.
+
+The generator wants to maximize this cost because that means the discriminator is doing poorly and is classifying it's fake values into reals. The discriminator wants to minimize this cost function because that means it's classifying things correctly.
+
+Of course the generator only sees the fake side of things, so it actually doesn't see anything about the reals.
+
+The generator's goal of maximizing the cost value and the discriminator’s goal of minimizing the cost value is called Minimax game.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/18_problem_with_BCE_loss2.png}
+\end{center}
+\caption{The goal of the minimax process is to try to make the generated fake distribution as close as possible to the real distribution.}
+\label{18_problem_with_BCE_loss2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/18_problem_with_BCE_loss3.png}
+\end{center}
+\caption{Roles of generator and discriminator: the discriminator has an easier "job" than the generator, therefore the discriminator often becomes "better" quickly during training.  The discriminator's job is to output a single prediction value of 0 or 1, and the generator has to modify its output composed of multiple features (an image) such that it "improves" (fools the discriminator).}
+\label{18_problem_with_BCE_loss3}
+\end{figure}
+% --------------------
+
+At the beginning of training, it is not a problem that the discriminator is better than the generator because the discriminator is not very accurate.
+
+The discriminator has trouble distinguishing the generated and real distributions, because the generated and real distributions are a little bit aligned.
+
+Because the generated and real distributions are A LITTLE BIT aligned, the discriminator can give useful feedback in
+the form of a non-zero gradient back to the generator.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/18_problem_with_BCE_loss4.png}
+\end{center}
+\caption{As training progresses, the generated and real distribution can either move closer together OR further apart.  In both cases, the discriminator becomes better at delineating between the generated and real distributions.}
+\label{18_problem_with_BCE_loss4}
+\end{figure}
+% --------------------
+
+\begin{itemize}
+\item Case 1: generated and real distributions MOVE CLOSER TOGETHER -> The generator creates "fake real" images in the end, and the discriminator eventually says all the generator's images are real
+\item Case 2: generated and real distributions MOVE FURTHER APART -> (vanishing gradient problem OCCURS) -> The generator only creates fakes and the discriminator says they are fake. The discriminator gives less useful feedback for the generator to improve because the real distribution will be centered around one and the generated distribution will start to approach zero. In fact, it might give gradients closer to zero, and that becomes unhelpful for the generator because then the generator doesn't know how to improve.
+\end{itemize}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/18_problem_with_BCE_loss5.png}
+\end{center}
+\caption{Case 2}
+\label{18_problem_with_BCE_loss5}
+\end{figure}
+% --------------------
+
+Summary:
+\item GANs tries to make the generated distribution look similar to the real one by minimizing the underlying cost function that measures how different the distributions are.
+\item As a discriminator improves during training and sometimes improves more easily than the generator, that underlying cost function will have those flat regions when the distributions are very different from one another
+\item When the gradient is flat, the discriminator is able to distinguish between the reals and the fakes easily.  But, the generator will create unfinished outputs that are NEVER real. 
+\item When the gradient of the cost function is flat it is called the vanishing gradient problem
+\end{itemize}
+
+Question:
+???
+
+
+The distance between the real and fake distributions is inaccurate because of the sigmoid function.
+
+The scoring function is too steep.
+
+(checked) The discriminator does not output useful gradients (feedback) for the generator when the real/fake distributions are far apart.
+Correct! This is also called the vanishing gradient problem because the gradients approach 0 when the distributions are far appart. 
+
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Earth Mover's Distance}
+
+When using BCE loss to train a GAN, you often encounter mode collapse, and vanishing gradient problems due to the underlying cost function of the whole architecture.
+
+Even though there is an infinite number of decimal values between zero and one, the discriminator, as it improves, will be pushing towards those ends.
+
+
+In this video, you'll see a different underlying cost function called Earth mover's distance, that measures the distance between two distributions and generally outperforms the one associated with BCE loss for training GANs.
+
+At the end I'll show you why this helps with the vanishing gradient problem.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/19_earth_movers_distance1.png}
+\end{center}
+\caption{The generated and real distributions are normal and have the SAME VARIANCE but DIFFERENT MEANS. The Earth Mover's distance measures how different these two distributions are by estimating the amount of effort it takes to make the generated distribution equal to the real. }
+\label{19_earth_movers_distance1}
+\end{figure}
+% --------------------
+
+So intuitively, the generate distribution was a pile of dirt, how difficult would it be to move that pile of dirt and
+mold it into the shape and location of the real distribution?
+
+
+The function depends on both the distance and the amount that the generated distribution needs to be moved.
+I'll show you a function that
+calculates this in the next video.
+
+So the problem with BCE loss is that as a discriminator improves, it would start giving more extreme values between zero and one, so values closer to one and closer to zero.
+
+As a result, this became less helpful feedback back to the generator.
+So the generator would stop learning due to vanishing gradient problems.
+With Earth mover's distance, however, there's no such ceiling to the zero and one.
+So the cost function continues to grow regardless of how far apart these distributions are.
+
+The gradient of this measure won't approach zero and as a result, GANs are less prone to vanishing gradient problems and
+from vanishing gradient problems, mode collapse.
+
+So wrapping up, Earth mover's distance is a function of the effort to make a distribution equal to another.
+So it depends on both distance and amount.
+Unlike BCE, it doesn't have flat regions when the distributions start to get very different, and the discriminator starts to improve a lot.
+
+So approximating this measure eliminates the vanishing gradient problem, and reduces the likelihood of mode collapse in GANs.
+
+Summary
+Earth mover's distance (EMD) is a function of amount and distance
+
+Does not have flat regions when the distributions are very different - means that the cost function will never remain the same at every iteration like the BCE when the distributions are different, thus preventing the generator to learn that it is doing something wrong
+
+Approximating EMD solves the problem associated with BCE - meaning the cost function now reflects how well the what the generator does with what the discriminator says is the truth (ie: the discriminator will not label 7's as 1's) 
+
+Question: 
+What does Earth Mover's distance measure?
+
+(checked) How different two distributions are based on distance and amount that needs to be moved
+Correct! Earth mover's distance is a measure of how different two distributions are by estimating the effort it takes to make the generated distribution equal to the real one.
+
+How much the distribution resembles a sphere.
+
+How similar two distributions are based on their overlap.
+
+How diverse a distribution is.
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Wasserstein Loss}
+
+BCE Loss is used traditionally to train GANs, but there is a case situation where it fails due to its equation formulation. When this case occurs it causes the generator to not be trained correctly; the generator is not trained and the discriminator says all the images are fake.
+
+Wasserstein Loss (W-Loss) = an alternative loss function to fix this problem using the Earth Mover's Distance
+
+The BCE Loss essentially measures on average how well observations are being classified by the discriminator as fake and real
+
+So, the generator in GANs wants to maximize this cost, because that means the discriminator is saying that its fake values seem really real, while the discriminator wants to minimize that cost.
+
+Minimax game : the generator tries to maximize the cost (meaning the discriminator misclassifies values with respect to the reals - some of the fake classes do not look like the real classes) and the discriminator tries to minimize the cost (meaning the discriminator correctly classifies values - ALL the fake classes look like the real classes)
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/20_wasserstein_loss1.png}
+\end{center}
+\caption{BCE Loss can be simplified as : 1) The sum and division over m examples can be represented as a mean OR expected value, 2) the first part inside the sum measures how bad the discriminator classifies real observations (at y=1 it is "good" at claasifying reals as reals), 3) the second part measures how bad the discriminator classifies fake observations produced by the generator as real (at y=0 it is really "good" at classifying fakes as fakes).}
+\label{20_wasserstein_loss1}
+\end{figure}
+% --------------------
+
+The W-Loss cost function approximates the Earth Mover's Distance between the real and generated distributions; it looks similar to the simplified form for the BCE Loss
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/20_wasserstein_loss2.png}
+\end{center}
+\caption{The W-Loss is the expected/mean value of the critic (c) for real examples MINUS the expected/mean value of c for fake examples.  g(z) denotes the generator inputting a noise vector to produce a fake image.}
+\label{20_wasserstein_loss2}
+\end{figure}
+% --------------------
+
+The generator wants to minimize this difference (it wants the discriminator to think that its fake images are real), and the discriminator wants to maximize this difference (it wants to be certain that the fakes are real)
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/20_wasserstein_loss3.png}
+\end{center}
+\caption{BCE Loss is bounded, the W-Loss is not bounded.}
+\label{20_wasserstein_loss3}
+\end{figure}
+% --------------------
+
+Bounded:
+The BCE Loss (J(theta)) is BOUNDED between 0 and 1, because of the : 1) log function, 2) discriminator values (y) are bounded between 0 and 1 because we use a sigmoid activation function in the output layer such that it tells us the probability for a certain class: fake=0 or real=1.
+
+Not Bounded:
+W-Loss is not bounded so you can have a linear layer at the end of the discriminator's neural network, and that could produce any real value output.  The output can be interpreted as how real an image is considered by the critic.  This critic system is NOT called a discriminator, because it does not discriminate between two classes.
+
+Main differences between W-Loss and BCE Loss:
+\begin{itemize}
+\item the discriminator under BCE Loss outputs a value between 0 and 1, while the critic in W-Loss will output any number
+\item W-Loss measures the "mean distribution difference" between predictions using real and fake examples
+\item BCE Loss measures a "log difference distance" between predictions using real and fake examples, bounded to values between 0 and 1
+\item Because the discriminator is bounded to values between 0 and 1, it does not precisely measure the "prediction/performance distance" between real and fake examples.  The critic can more precisely measure "prediction/performance distance" between real and fake examples because it is unbounded; the critic is allowed to improve without degrading its feedback back to the generator. And this is because, it doesn't have a vanishing gradient problem, and this will mitigate against mode collapse OR not training the generator enough to produce realistic images, because the generator will always get useful feedback back.
+\end{itemize}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/20_wasserstein_loss4.png}
+\end{center}
+\caption{W-Loss vs BCE Loss}
+\label{20_wasserstein_loss4}
+\end{figure}
+% --------------------
+
+Summary
+W-Loss looks very similar to BCE Loss, but it isn't as complex a mathematical expression.
+
+W-Loss prevents mode collapse and vanishing gradient problems - because it uses the Earth Mover's Distance
+
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Condition on Wasserstein Critic}
+
+Wasserstein Loss or W-Loss solves some problems faced by GANs, like mode collapse and vanishing gradients.
+But it could work more efficiently if the critic was 1-Lipschitz Continuous (MEANING the slope/gradient can not be greater than 1)
+
+W-Loss is a simple expression that computes the difference between the expected values of the critics output for the real examples x and its predictions on the fake examples g(z).
+
+The generator tries to minimize this expression, trying to get the generative examples to be as close as possible to the real examples while the critic wants to maximize this expression because it wants to differentiate between the reals and the fakes, it wants the distance to be as large as possible.
+
+For training GANs using W-Loss, the critic needs to be 1-Lipschitz Continuous or 1-L Continuous.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/21_condition_on_wasserstein_critic1.png}
+\end{center}
+\caption{For a function like the critics neural network to be at 1-Lipschitz Continuous, the norm of its gradient needs to be at most one. This means that, the slope OR gradient can't be greater than one at any point.}
+\label{21_condition_on_wasserstein_critic1}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/21_condition_on_wasserstein_critic2.png}
+\end{center}
+\caption{To check if a function f(x) = x squared, is 1-Lipschitz Continuous, you want to go along every point in this function and make sure its slope is less than or equal to one, or its gradient is less than or equal to one, and what you can do is, you can actually draw two lines, one where the slope is exactly one at this certain point that you're evaluating function, and one where the slope is negative one where you're evaluating our function.}
+\label{21_condition_on_wasserstein_critic2}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/21_condition_on_wasserstein_critic3.png}
+\end{center}
+\caption{You want to make sure that the growth of this function never goes out of bounds from these lines because staying within these lines means that the function is growing linearly. Here this function is not Lipschitz Continuous because it's coming out in all these sections. It's not staying within this green area, which suggests that it's growing more than linearly.}
+\label{21_condition_on_wasserstein_critic3}
+\end{figure}
+% --------------------
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/21_condition_on_wasserstein_critic4.png}
+\end{center}
+\caption{This is a smooth curve functions. You want to again check every single point on this function before you can determine whether or not that this is 1-Lipschitz Continuous. Testing the slope at all points on the sinusoid, we see that the gradient is equal to or less than 1 OR bounded; the function is 1-Lipschitz Continuous.}
+\label{21_condition_on_wasserstein_critic4}
+\end{figure}
+% --------------------
+
+This condition on the critics neural network is important for W-Loss because it assures that the W-Loss function is not only continuous and differentiable, but also that it doesn't grow too much and maintain some stability during training.
+
+This is what makes the underlying Earth Movers Distance valid, which is what W-Loss is founded on. This is required for training both the critic and generators neural networks and it also increases stability because
+the variation as the GAN learns will be bounded.
+
+Summary
+\begin{itemize}
+\item Critic's neural network needs to be 1-L Continuous when using W-Loss
+\item This condition ensures that W-Loss is correctly approximating Earth Mover's Distance (meaning that you want to compare bounded and equal sized generator and discriminator values)
+\end{itemize}
+
+Question
+1) What points on a function are considered for the evaluation of 1-Lipschitz Continuity?
+(checked) All points on the function.
+The origin: (0,0).
+Primarily the x-axis.
+Both axes: x-axis and y-axis.
+
+2) When is a function 1-Lipschitz Continuous?
+When its gradient norm is greater than or equal to 1 at all points.
+When its gradient norm is steadily at 1.
+When it represents a real classification.
+(checked) When its gradient norm is less than or equal to 1 at all points.
+Correct! A function is 1-Lipschitz Continuous when its slope is no greater than 1 at all points.
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : 1-Lipschitz Continuity Enforcement}
+
+Overview
+\being{itemize}
+\item One Lipschitz continuity or 1-L continuity of the critic neural network in your Wasserstein loss and gain ensures that Wasserstein loss is valid
+\item How to enforce 1-L continuity when training your critic
+\item Introduce two different methods to enforce 1-L continuity on the critic: 1) weight clipping, 2) gradient penalty.
+\item Advantages of gradient penalty over weight clipping
+\being{itemize}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/22_one-lipschitz_continuity_enforcement1.png}
+\end{center}
+\caption{If the critic is 1-L continuous, the norm of its gradient is at most one at every single point of this function; denoted by the L2 gradient norm of f(x) <= 1, where f is the critic and x is the image. The L2 norm is the Euclidean distance (OR hypotenuse when referring to triangles); shortest distance between two points.}
+\label{22_one-lipschitz_continuity_enforcement1}
+\end{figure}
+% --------------------
+
+Two common ways of ensuring 1-L continuity: 1) weight clipping, 2) gradient penalty
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/22_one-lipschitz_continuity_enforcement2.png}
+\end{center}
+\caption{Weight clipping: force the critic NN weights to have values between a set maximum and minimum value (fixed interval). Positive: weight clipping enforces 1-L continuity (the gradient norm of the critic to be <= 1)
+Negative: 1) you have a similar problem as with BCE Loss, the critic is bounded to a limited range so it gives less good feedback to the generator cause it not to learn well, and the discriminator too does not learn well. 2) the critic is not bounded enough, and there is not a defined learning path (it does not find the global minimum well, so you have to use hyperparameter turning to train the critic)}
+\label{22_one-lipschitz_continuity_enforcement2}
+\end{figure}
+% --------------------
+
+
+Gradient penalty: a SOFTER way to enforce the critic to be 1-Lipschitz continuous by adding a regularization term to the loss function; to penalize the critic when its gradient norm is > 1.
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/22_one-lipschitz_continuity_enforcement3.png}
+\end{center}
+\caption{1-L Enforcement: Gradient Penalty}
+\label{22_one-lipschitz_continuity_enforcement3}
+\end{figure}
+% --------------------
+
+In the W-loss function we try to make the difference between the critic's predictions for real and fake images small, BY forcing the unweighted gradient norm (gp) to be small, --> BY multiplying by a regularization parameter (scalar parameter) lambda.  The larger you make lambda the smaller gp will become, and thus the difference too.
+\begin{equation}
+-(E(c(x) - E(c(g(z)))) + \lambda*gp
+\end{equation}
+
+Remember that E(c(x) - E(c(g(z))) is the Earth mover's distance, think of this difference as the distance between the fake and real images.
+
+To calculate gp, you do NOT take the gradient for every image in the dataset (OR "every possible point in the feature space").  You only calculate the gradient for real and fake images combined together, this is called "interpolating between real and fake examples". 
+
+Take note that E(c(x)), which is the mean of the critic's score for real images is the 'ground truth'/perfect, and the goal is to have the critic score the fake images similarly (E(c(g(z))) will become more and more similar to E(c(x))).  This implies that the gradient of c(x) is A LITTLE BIT bounded (enforcing 1-L continuity or almost), AND MORE bounded than c(g(z)); with the goal of making the gradient of c(g(z)) MORE bounded.
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/22_one-lipschitz_continuity_enforcement4.png}
+\end{center}
+\caption{1-L Enforcement: Gradient Penalty}
+\label{22_one-lipschitz_continuity_enforcement4}
+\end{figure}
+% --------------------
+
+The steps to calculate the gp are:
+\begin{enumerate}
+\item mix the images to find the interpolation between real and fake images; obtaining an image in-between the two types of images.  Called $\hat{x}$ in the image, mixed_images = real * epsilon + fake * (1 - epsilon)
+
+\item Calculate the critic's scores on the mixed images. mixed_scores = crit(mixed_images)
+    
+\item Take the gradient of the scores with respect to the images. The gradient of the critic's scores needs to be less than or equal to one. gradient = torch.autograd.grad(inputs=mixed_images, outputs=mixed_scores,grad_outputs=torch.ones_like(mixed_scores), create_graph=True, retain_graph=True,)[0]
+
+\item Calculate the gradient penalty
+\begin{itemize}
+\item Flatten the gradients so that each row captures one image
+gradient = gradient.view(len(gradient), -1)
+\item Calculate the magnitude of every row :  gradient_norm = gradient.norm(2, dim=1)
+\item Penalize the mean squared distance of the gradient norms from 1 :  penalty = torch.mean((gradient_norm - 1)**2)
+\end{itemize}
+\end{enumerate}
+
+% -------------------- Figure  --------------------
+\begin{figure}[htp]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{C:/Users/jamilah/Documents/ONLINE_CLASSES/GANS/Class6_Build_Basic_GANs/build_basic_GANs_notes_figures/22_one-lipschitz_continuity_enforcement5.png}
+\end{center}
+\caption{1-L Enforcement: Gradient Penalty}
+\label{22_one-lipschitz_continuity_enforcement5}
+\end{figure}
+% --------------------
+
+Gradient penalty is better than weight clipping.
+
+Summary
+\begin{itemize}
+\item Weight clipping and gradient penalty are ways to enforce 1-L continuity
+\item Weight clipping prevents the critic from distinguishing fake from real images ("learning"), either the bounds are too narrow (same problem as BCE, and the critic does not train the discriminator, says all the discriminator images are fake) OR large (the critic loss function does not converge, can not say what is real or fake accurately).  If the bounds are too large, you need to perform hyperparameter tuning to get the loss function to converge.
+\item Gradient penalty work better than weight clipping because 1-L continuity OR "almost 1-L continuity" (not every point on the gradient has a slope of one or less, but it is close) is enforced, by the regualarization term without hyper parameter tuning. It is considered a "softer" method than weight clipping because only a parameter is added to the loss function, instead of CHANGING the weights.
+\end{itemize}
+
+Question
+Why do you use an intermediate image for calculating the gradient penalty?
+
+Using the gradients on an intermediate image with respect to the generator helps it learn to generate more realistic images.
+
+(checked) Using the gradients on an intermediate image with respect to the critic is an approximation for enforcing the gradient norm to be 1 almost everywhere.
+Correct! Since checking the critic’s gradient at each possible point of the feature space is virtually impossible, you can approximate this by using interpolated images.
+
+To give the model more work to do.
+
+Question
+
+What is a soft way to restrict the critic to be 1-Lipschitz?
+
+Normalizing its weights.
+
+(checked) Adding regularization to the loss function that penalizes the gradient to be less than or equal to 1.
+Correct! By using a gradient penalty, you are not strictly enforcing 1-L continuity, but encouraging it.
+
+Adding a regularization term for the weights, as in L2 norm/regularization.
+
+Clipping its weights.
+This is a 'hard way': Weight clipping forces the weights of the critic’s neural network to a limited range of values.
+
+Because you can’t calculate the gradient norm on real and fake images.
+
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Programming Assignment : WGAN}
+
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : (Optional) SN-GAN}
+
+SN-GANs is a way to train the discriminator/generator faster by "normalizing" the gradient weights using the singular value decomposition of the the gradient weights. The gradient is bounded with respect to the "maximum" gradient weight values.
+
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : (Optional Notebook) ProteinGAN}
+
+Please note that this is an optional notebook that is meant to introduce more advanced concepts, if you're up for a challenge. So, don't worry if you don't completely follow every step! We provide external resources for extra base knowledge required to grasp some components of the advanced material.
+
+The goal of this notebook is to demonstrate that core GAN ideas can be applied outside of the image domain. In this notebook, you will be able to play around with a pre-trained ProteinGAN model to see how it can be used in bioinformatics to generate functional molecules.
+
+Notebook link: https://colab.research.google.com/github/https-deeplearning-ai/GANs-Public/blob/master/ProteinGAN.ipynb
+
+ProteinGAN was developed by Biomatters Designs and Zelezniak lab at Chalmers University of Technology.
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : (Optional) The WGAN and WGAN-GP Papers}
+
+Interested in the papers behind the Wasserstein GAN with Gradient Penalty (WGAN-GP) you just implemented? Check them out! The first paper is the original WGAN paper and the second proposes GP (as well as weight clipping) to WGAN in order to enforce 1-Lipschitz continuity and improve stability.
+
+Wasserstein GAN (Arjovsky, Chintala, and Bottou, 2017): https://arxiv.org/abs/1701.07875
+
+Improved Training of Wasserstein GANs (Gulrajani et al., 2017): https://arxiv.org/abs/1704.00028
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : (Optional) WGAN Walkthrough}
+
+Want another explanation of WGAN? This article provides a great walkthrough of how WGAN addresses the difficulties of training a traditional GAN with a focus on the loss functions.
+
+From GAN to WGAN (Weng, 2017): https://lilianweng.github.io/lil-log/2017/08/20/from-GAN-to-WGAN.html
+
+\section{Week 3: Wasserstein GANs with Gradient Penalty : Works Cited}
+
+All of the resources cited in Course 1 Week 3, in one place.  You are encouraged to explore these papers/sites if they interest you—for this week, both papers have been included as an optional reading! They are listed in the order they appear in the lessons.
+
+From the notebook:
+\begin{itemize}
+\item Wasserstein GAN (Arjovsky, Chintala, and Bottou, 2017): https://arxiv.org/abs/1701.07875
+\item Improved Training of Wasserstein GANs (Gulrajani et al., 2017): https://arxiv.org/abs/1704.00028
+\item MNIST Database: http://yann.lecun.com/exdb/mnist/
+\end{itemize}
+
+
+% -------------------------------------------------
+% WEEK 4
+% -------------------------------------------------
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Welcome to Week 4}
+
+Unconditional generation = when the GANs does not control what it generates
+
+Conditional generation = when you specify what type of items you want your GANs to make, by adapting the training process
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Conditional Generation: Intuition}
+
+Unconditional generation example : the gumball machine is the generator, the coin is equivalent to the random noise vector that your GAN uses to generate a fake image.  The gumball is the fake image that your GAN gives.  We can not control which color gumball is given, similarly we can not control which type of fake image is given.
+
+Conditional generation example : the vending machine is the generator, the coin is the random noise vector and the item code is the class label to generate a specific fake image from a certain class.  The soda with a certain color is the fake image of a certain class that your GAN gives. We can control what color soda the vending machine gives, similarly we can control the type of fake image our GAN gives with respect to the class.  But, we can not control the amount/intensity, or form in which the class attribute is present in the image.  Just like, we can not control the vending machine to give us a specific soda bottle or a soda with more quantity.  
+
+Summary
+\item Conditional generation requires labeled datasets
+\item Examples can be generated for the selected class
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Conditional Generation: Inputs}
+
+Outline
+How to tell the generator what type of example to produce
+Input representation for the discriminator
+
+Conditional generation lets you produce examples from the classes you want.
+
+For doing that, you need to have a label data-set and somehow pass
+that class information to both the generator and the discriminator during training.
+
+Here you'll learn how to tell the generator which class to produce and how
+declassifying an example is passing through the discriminator along with the image to be classified.
+
+You've seen already with unconditional generation, the generator needs a noise vector to produce random examples.
+
+For conditional generation, you also need a vector to tell the generator from which class the generated examples should come from.
+
+Usually this is a one-hot vector, which means that there are zeros in every position except for one position corresponding to the class you want.
+
+Remember that the noise vector is random values as well, but it doesn't have to zero or one.
+
+As an example, let's say all of these different values in the one-hot class vector are different dog breeds; and this second cell here corresponds to a husky.
+
+Specifying a position of one here means that you want the generator to produce a husky. If you had a one somewhere else and a zero on the husky cell, then you would want it to produce a different class; for example, a golden retriever.
+
+Here the noise vector is the one that adds randomness in the generation,
+similar to before; to let you produce a diverse set of examples. But now it's a diverse set within the certain class, conditioned on the certain class
+and restricted by the second class.
+
+The one-hot vector lets you control what class to generate.
+
+The input to the generator in a conditional GAN is actually a concatenated vector of both the noise and the one-hot class information.
+So it's one huge vector.
+For example, with a class vector
+here representing a husky breed,
+the generator will ideally produce
+a husky dogs from one noise vector.
+But if you change that noise vector,
+it should produce a different husky dog;
+while the class information stays the same.
+So both are [inaudible] huskies,
+both are the same class.
+But how do you ensure
+the generator actually produces a husky?
+This seems like magic.
+Why doesn't it just produce any random dog?
+Well, that's actually because
+the discriminator will also
+be given this class information.
+The generator, needs to fool the discriminator;
+so you'll see how this happens.
+The discriminator in a similar way
+will take the examples,
+but now they're paired with the class information as
+inputs to determine if the examples are
+either real or fake representations
+of that particular class;
+and that's what's key here.
+For example, with this class of golden retriever,
+but in image of a beagle dogs.
+So not a golden retriever being fed in.
+This discriminated arches actually say this is
+fake because that is not a real looking golden retriever,
+even though it's a very real looking image of a beagle.
+This is just 5 percent real is what it's going to say.
+As a result, for the discriminator to
+predict that an example is real,
+it needs to look like the examples
+from that class in the training data set.
+The training data-set is key here because it'll
+get these real labels next to it.
+The generator, in order to
+fool it with a golden retriever,
+needs to produce a realistic golden retriever.
+Following the last example with a golden retriever class,
+the discriminator will learn to predict that the image is
+more real only if
+the example looks like a golden retriever.
+Again, this is because
+the real images will have the correct class label,
+and this encourages the generated images to take on
+the right class as well. Pretty cool, right?
+Digging a little bit deeper,
+the input to the discriminator is an image.
+How do you go about adding that class information?
+Well, the image is fed in as three different channels,
+RGB, red, green, blue,
+or just one channel if it's a gray-scale image.
+So that's this image component.
+
+Then the one-hot class information could also be fed in as additional channels where all the channels take on values of all zeros; so all these white blocks of the same height and width as the image take on values of all zeros.
+
+Whereas this black one here will take on values of ones.
+
+In contrast to that one-hot vector, these are typically much larger matrices where each channel is full of zeros at every position where it's not that class.
+
+There are many other less space consuming ways of doing this, like compressing this information in another format.
+
+You can even create a separate neural network head to do that for you, which would be prudent if you had many different classes.
+
+But this approach definitely works for the seven or so classes you have here; and the model will learn that information.
+
+To sum up in conditional generation, you pass the class information to both models.
+
+To the generator it's typically a one-hot vector concatenated with your noise vector to the discriminator when the desired output of the GANs are images, it's one-hot matrices representing the channels.
+
+The size of the class vector and the number of extra channels for the class information is just the same as the number of classes you'll be turning on. 
+
+
+# --------------------To REDO - DID YESTERDAY
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Programming Assignment : Conditional GAN}
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Lab : (Optional) InfoGAN}
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation :(Optional) The Conditional GAN Paper}
+
+Fascinated by conditional GANs? Take a look at the paper that proposed it and the training/testing methods that were behind it!
+
+Conditional Generative Adversarial Nets (Mirza and Osindero, 2014): https://arxiv.org/abs/1411.1784
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Controllable Generation}
+
+Outline:
+- What is controllable generation
+- How it compares to conditional generation
+
+Conditional generation allows you to control the output DURING training by selecting labels and features,
+
+Controllable generation allows you to control the outputs AFTER it has been trained, by identifying which elements in the input noise vector correspond to an output attribute. Change the input noise vector entries, using the trained model, and get the desired image with the output attribute.
+
+Controllable generation allows you to control some of the features that you want in your output examples. 
+
+Example 1:  with a GAN that performs face generation, you could control the age of the person's looks in the image or if they have sunglasses or the direction they're looking at in the picture, or they're perceived gender. You can do this by changing the input noise vector Z, that is fed to the generator after you train the model.
+
+Example 2: In the picture with a woman with red hair, if you change the first entry in the input noise vector, the hair color turns blue; thus the first element represents changing hair color.
+
+Sometimes controllable generation can do something that continuous generation does, like identify a class (ie: a person with OR without sunglasses). 
+
+But, typically continuous generation creates distinct classes, you need to have a label data set and train the model using both labeled image data and image data.
+
+Controllable generation you create images with a specific continuous intensity for a distinct class ("to control how much or how little of a feature you want"); a continuous feature like age.
+
+Conditional generation on the other hand, allows you to specify what class you want to a very different type of thing.
+
+NOTE : if you labeled every element in your input noise vector, to control which pixels should have which attribute, you would be doing conditional generation with the intention of a controllable generation output (as you are labeling these things DURING TRAINING).  
+
+Summary
+- Controllable generation lets you control the features of the generated outputs
+- It does not need a labeled training dataset
+- The input vector is tweaked to get different features on the output
+
+Question
+
+What is a key difference between controllable generation and conditional generation?
+
+Controllable generation lets you choose what class to generate while conditional generation lets you change the features on the image.
+
+(checked) Controllable generation is done after training by modifying the z vectors passed to the generator while conditional generation is done during training and requires a labelled dataset.
+Correct! While conditional generation leverages labels during training, controllable generation controls what features you want in the output examples after the model has been trained.
+
+Controllable generation does not need a labelled dataset while it’s optional for conditional generation.
+
+Controllable generation modifies the generator and discriminator while conditional generation modifies the Z-space input.
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Vector Algebra in the Z-Space}
+
+Outline
+- Interpolation in the z-space
+- Modifying the noise vector z to control desired features
+
+Controllable generation is achieved by manipulating the noise vector z that is fed into the generator.
+
+Controllable generation and interpolation are somewhat alike.
+
+With interpolation, you get these intermediate examples between two generated observations.
+
+In practice, with interpolation, you can see how an image morphs into another, like in this GIF, where each digit from zero to nine morphs into the following one.
+
+What happens is that you get intermediate examples between the targets by manipulating the inputs from Z-space, which is just the name for the vector space of the noise vectors.
+
+You'll see later that this is the same idea behind controllable generation.
+
+Just to be clear here, Z_1 and Z_2 are the two dimensions in this Z-space that you're looking at right now.
+As an example, there's a noise vector V_1 and a noise vector V_2, where V_1 could have a Z_1 value of, five and a Z_2 value of let's say 10. Then this is the vector [5, 10] and then V_2 has a smaller value where the vector is [4, 2]
+
+That's what Z_1 and Z_2 are, just dimensions on the Z-space and the actual vectors V_1 and V_2 are going to represent concrete vector values in this Z-space.
+
+V_1, when you feed it into the generator, will produce this image here, and V_2 when you feed it into the generator, will produce this image there.
+
+If you want to get intermediate values between these two images, you can make an interpolation between their two input vectors, V_1 and V_2 in the Z-space, actually.
+This interpolation is often a linear interpolation.
+Of course, there are other ways to
+interpolate between these two vectors.
+Then you can take all these intermediate vectors
+and see what they produce from the generator.
+The generator takes this vector and
+produces that image, this vector,
+that image, and this vector,
+that image to get this gradient between these two images.
+
+Controllable generation also uses changes in the Z-space and takes advantage of how modifications to the noise vectors are reflected on the output from the generator.
+
+For example, with the noise vector,
+you could get a picture of a woman with
+red hair and then with another noise vector,
+you could get a picture of the same
+woman but with blue hair.
+The difference between these two noise vectors
+is just this direction in which you have to
+move in Z-space to
+modify the hair color of your generated images.
+In controllable generation, your goal is to find
+these directions for different features you care about.
+For example, modifying hair color.
+But don't worry about finding that exact direction yet,
+I'm going to show you in the following lectures.
+With this known direction d,
+let's call this direction d,
+in your Z-space, you can now
+control the features on the output of your GAN,
+which is really exciting.
+This means that if you then generate an image of
+a man with red hair produced by the same Generator g,
+with this input noise vector here, V_1,
+you can modify the hair color of
+this man in the image by adding
+that direction vector d you
+found earlier to the noise vector,
+creating this new noise vector here, V_1 + d,
+passing that into your generator and
+getting a resulting image where his hair is now blue.
+To sum up, in controllable generation,
+you need to find the directions in the Z-space related to
+changes of the desired features
+on the output of your GAN.
+With known directions,
+controllable generation works by moving
+the noise vector in different directions in that Z-space.
+Up next, you'll learn
+some challenges related to controllable generation and
+how to find directions on the Z-space with
+known effects on the generated outputs. 
+
+Summary
+- To control output features, you need to find directions in the Z-space
+- To modify your output, you move around in the Z-Space
+
+Question
+
+How are controllable generation and interpolation similar?
+
+They modify features by changing the pixels.
+
+They output a different image class then the one inputted.
+
+They change the color of images by inverting pixels.
+
+(checked) They both change features by adapting values of the z vector.
+Correct! Both are done by manipulating the noise vector z.
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Challenges with Controllable Generation}
+
+Outline
+- Output feature correlation
+- Z-space entanglement
+
+Controllable generation makes it so that you can
+decide the features and the output of a GAN,
+like hair color or hair length in
+the GAN that produces pictures of people.
+However, controllable generation has
+a couple of challenges that you'll see in this video.
+Specifically, you'll learn about feature correlation
+and the alpha space in Z space entanglement.
+When different features have a high
+correlation in the data set,
+they use to train your GAN,
+it becomes difficult to control specific features without
+modifying the ones that are correlated to them.
+For example, ideally you want to be able to
+control single features like the amount of
+beard on a person's face produced by your GAN and if
+features in the data set don't
+happen to have a high correlation,
+you'd be able to take this picture
+of a woman and add a beard
+to her by moving in some direction in Z space.
+
+However, it's very likely that in the data set you use for training features like the presence of a beard and how masculine the face looks will be strongly correlated.
+
+If you want to add a beard to the picture of a woman, you'd end up modifying many more features on the output. But that perhaps is not desirable because you want to be able to find these directions where you can just change one feature about someone.
+
+That way you can reliably edit images.
+
+Another challenge faced by controllable generation is known as entanglement in the Z space.
+
+When the Z space is entangled, movement in the different directions has an effect on multiple features simultaneously in the output.
+
+Even if those features aren't necessarily correlated in your training data set. This is just how the noise space was learned; to be very entangled.
+
+In this entangled Z space, when you control if a person in
+the output has glasses, for example,
+you also end up modifying whether she has a beard in
+her hair or when you try to modify her apparent age,
+you'll end up also changing
+her apparent eyes and hair color too.
+That's not quite desirable.
+The same happens with other uncorrelated features.
+This means that changes in some of
+the components of the noise vectors change
+multiple features in the output
+at the same time and this makes it difficult,
+if not impossible, to control the output.
+This is a very common problem when
+the Z space doesn't have enough dimensions relative to
+the number of features you want to
+control in the output because
+then it actually can't map things one-to-one.
+This is also just generally
+an issue when training generative models.
+
+To recap, controllable generation faces several challenges.
+
+If features in your data set has a high correlation with each other and you don't account for this in some way,
+then when you try to control the output of your GAN, you end up changing multiple features at a time.
+
+Even if the features you want to control don't have
+a high correlation with each
+other in the training data set,
+control of a generation is also
+difficult if your Z space is entangled.
+Which will happen commonly if
+the number of dimensions in your Z space is not
+large enough but there are a host
+of other reasons of why that happens as well. 
+
+Summary
+- When trying to control one feature, others that are correlated change
+- Z-space entanglement makes controllability difficult; if not impossible
+- Entanglement happens when z does not have enough dimensions 
+
+
+Question
+
+When does controllable generation commonly fail?
+
+When the model collapses and the z vector is too large.
+
+When the generator can’t learn features and the features are incorrectly labelled.
+
+When the images are not labelled and the Z-space is entangled.
+
+(checked) When features strongly correlate with each other and z values don’t correspond to clear mappings on their images.
+Correct! When the Z-space is entangled, movement in the different directions has an effect on multiple features simultaneously in the output. This makes it difficult to control a single feature without modifying others.
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Classifier Gradients}
+
+Outline
+- How to use classifiers to find directions in the Z-space
+- Requirements to use this method
+
+Controllable generation works by moving into the z-space, according to directions that correspond to desired features, such as lengthening hair or shortening hair.
+
+In this video, you'll learn a very simple method used to find that direction using the gradient of trained classifiers, you'll see what the requirements are for this method.
+
+Method for finding the directions in the Z-space that modify certain output feature, by using the trained classifier's gradient
+
+1) Use a train classifier that identifies if a person in a picture has that said feature: 
+\begin{itemize}
+\item pass a batch of noise vector Z through the generator
+\item obtain fake images
+\item pass these images through a sunglasses classifier which will tell you which images contain a Z-space for sunglasses
+\item modify your Z vector to look like a Z-space with sunglasses, this means "move in the direction of the gradient with the costs"
+\end{itemize}
+
+That penalizes the model for every image classified as not having sunglasses.
+
+So then you repeat this process until the images are classified as people
+with sunglasses.
+
+So this method is very simply inefficient, and some might argue, even lazy,
+because you're using this classifier that's already there for you.
+
+But I think it's great, that you're taking advantage of a pre-training classifier.
+
+Negative to this method: you need a pre-trained classifier that accurately detects the feature that you want to control. You can either train your own classifier, OR use an existing classifier.
+
+Summary
+- Existing classifiers can be used to find directions in the Z-space associated with features in the output 
+- To find directions, the updates are done just to the noise vector without changing the generator
+
+Question
+
+How can you use a classifier for controllable generation?
+
+You can calculate the loss between the classifier’s results and the discriminator’s and pass it to the generator.
+
+You can replace the discriminator with a classifier.
+
+(checked) You can calculate the gradient of the z vectors along certain features through the classifier to find the direction to move the z vectors.
+Correct! Pre-trained classifiers can be used to find directions in the Z-space associated with features in the output of GANs. Remember that to find those directions, you need to modify the noise vectors without changing the generator.
+
+You can train a classifier on features to help train your generator.
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Disentanglement}
+
+Outline
+- What a disentangled Z-space means
+- Ways to encourage disentangled Z-spaces
+
+Take the following z-noise vectors, v_1 and v_2, and imagine that these are coming from a disentangled z-space.
+
+Now, here on the right, I'm visualizing two dimensions of that z-space, but,
+of course, as you can tell from these noise vectors, there's many more than just two dimensions.
+
+Now, if this is a disentangled z-space, then each of these positions would
+correspond to a single feature in the output.
+
+For example, this first element, this first dimension of the noise vector would correspond to hair color, and the second dimension would correspond to hair length, and so on.
+
+If you wanted to change the hair color in a picture, you would literally just
+change the first element on its noise vector, or move in the z_1 direction on that z-space; and that's all you have to do, change the hair color.
+
+Then for hair length, you just move in the z_2 dimension by changing values in the second position
+
+Also, it's quite possible that these noise vectors are disentangled with respect to just these two different features and the rest of the values don't mean anything.
+
+This is because you typically want the size of your noise vector to be larger
+than the number of features you want to control.
+
+This makes it easier for your model to learn because it allows these values to take on different things over time during training.
+
+For example, if you only wanted to control these two features like hair color and hair length, then it's probably prudent to make your noise vector larger than just two-dimensions, but here you see three or more.
+
+These other values won't control a specific feature, they just help the model adapt to in training. Because the components of the noise vectors in the disentangled z-space allow you to change those features that you desire in the output, they're often called latent factors of variation, where the word latent comes from the fact that the information from the noise vectors
+is not seen directly on the output, but they do determine how that output looks.
+
+Sometimes you might hear noise vectors being referred more generally as latents.
+
+Then factors of variation means that these are just different factors like hair color and hair length that you want to vary, and only that one factor,
+that one feature that you are varying when you're varying it, not anything else.
+
+Essentially, a disentangled z-space means that there are specific indices on the noise vectors, these specific dimensions that change particular features on the output of your GAN.
+
+For instance, if a person on the image generated by a GAN has glasses or not,
+or whether she has a beard or some features of her hair.
+
+Each of these cells will correspond to something that you desire to change, and you can just change the values of that dimension in order to adapt glasses, beard, or hair.
+
+A crucial different between a disentangled z-space and
+an entangled z-space is that, here,
+with a disentangled z-space,
+when you control one of the features on the output,
+for example, glasses, the other features remain the same.
+The beard and hair will remain the same.
+
+Or if I change whether someone has a beard, the glasses and hair will stay the same.
+
+What this means is that with a disentangled z-space, you're much more likely to be able to add a beard to a person that looks very feminine without changing her hair or her facial features.
+
+One way to encourage your model to use disentangled z-spaces is to label your data and follow a similar process, the one used for conditional generation.
+But in this case, the information from the class is embedded in the noise vector; so you don't need this extra one-hot class information or class vector.
+
+However, using this method could be problematic for continuous classes.
+
+Imagine having to label thousands of human faces with the length of their hair.
+
+Of course, if you do do this, even having a few different classes, a few different buckets, might actually nudge your generator in the right direction.
+
+Another way to encourage your model is to use a disentangled z-space without
+labeling any of your examples.
+
+Instead, you add a regularization term to the loss function of your choice like BCE or W-loss to encourage your model to associate each index from the noise vectors, two different features on the output.
+
+This regularization could come from classifier gradients and they're also much more advanced techniques to do this in an unsupervised way, meaning without any labels.
+
+In summary, disentangled z-spaces let you control individual output features by corresponding certain z-values directly to desired features you want to control.
+
+To encourage your model to use disentangled noise vectors, you can use both supervised and unsupervised learning methods. 
+
+Summary 
+- Disentangled Z-spaces let you control individual features by corresponding z-values directly to them
+- There are supervised and unsupervised methods to achieve disentanglement
+
+Question
+
+What is the purpose of disentangling models?
+
+(checked) To correspond values in a z vector to meaningful features.
+Correct! In a disentangled Z-space, specific indices on the noise vector correspond to a singular feature in the output.
+
+To find latent features in an image with weak supervision.
+
+To make training easier and faster, mitigating mode collapse.
+
+To control the class of the images generated.
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Programming Assignment : Controllable Generation}
+
+
+\section{Week 4: Conditional GAN \& Controllable Generation : (Optional) An Example of a Controllable GAN}
+
+Want to learn more about controlling GAN generations using latent space? Check out this paper!
+
+Interpreting the Latent Space of GANs for Semantic Face Editing (Shen, Gu, Tang, and Zhou, 2020): https://arxiv.org/abs/1907.10786
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Works Cited}
+
+All of the resources cited in Course 1 Week 4, in one place. You are encouraged to explore these papers/sites if they interest you—the first paper has already been included as an optional reading! They are listed in the order they appear in the lessons.
+
+From the videos:
+
+- Interpreting the Latent Space of GANs for Semantic Face Editing (Shen, Gu, Tang, and Zhou, 2020): https://arxiv.org/abs/1907.10786
+
+From the notebooks:
+
+- MNIST Database: http://yann.lecun.com/exdb/mnist/
+- CelebFaces Attributes Dataset (CelebA): http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Conclusion of Course 1}
+
+Congratulations on completing Course 1. You're now equipped with the knowledge to learn and build the state of the art GAN in Course 2,
+which is a huge inflection point in realistic image generation. It’s like going from my grainy cell phone image from the 90s to HD movies.
+So the question is, what criteria can quantify that huge leap and improvement over the other GANs you've built?
+
+Well, in Course 2, you'll implement the most widely used evaluation metrics for GANs so you can quantitatively compare these GANs. Because you'll be building something so exciting and so advanced, this is something that's being put into products and around people's lives. So of course, you'll need to make sure anyone working with it handles it responsibly. One area of handling this responsibly is understanding its biases. So you'll explore how when this powerful model has been used, it actually hasn't been used in a very, very fair way. So buckle up, Course 2 is a blast into equipping you with the knowledge and the responsibility of building the model that put GANs on the map. With great power comes great responsibility. So see you in the next course. 
+
+\section{Week 4: Conditional GAN \& Controllable Generation : Acknowledgments}
+
+
+
+\end{document}				% REQUIRED
